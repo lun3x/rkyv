@@ -17,7 +17,7 @@ bytecheck = { workspace = true, optional = true }
 hashbrown = { version = "0.12", optional = true }
 ptr_meta = { workspace = true, default-features = false }
 rend = { version = "0.4", optional = true, default-features = false }
-rkyv_derive = { version = "=0.7.43", path = "../rkyv_derive" }
+rkyv_derive = { version = "=0.7.45", path = "../rkyv_derive" }
 seahash = "4.0"
 
 # Support for various common crates. These are primarily to get users off the ground and build some
@@ -47,7 +47,14 @@ copy_unsafe = []
 size_16 = []
 size_32 = []
 size_64 = []
-std = ["alloc", "bytecheck?/std", "ptr_meta/std", "rend?/std", "uuid?/std", "bytes?/std"]
+std = [
+    "alloc",
+    "bytecheck?/std",
+    "ptr_meta/std",
+    "rend?/std",
+    "uuid?/std",
+    "bytes?/std",
+]
 strict = ["rkyv_derive/strict"]
 uuid = ["dep:uuid", "bytecheck?/uuid"]
 validation = ["alloc", "bytecheck", "rend/validation"]

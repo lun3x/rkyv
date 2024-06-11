@@ -24,32 +24,37 @@ pub auto trait ArchiveCopy {}
 
 // (), PhantomData, PhantomPinned, bool, i8, u8, NonZeroI8, and NonZeroU8 are always ArchiveCopy
 impl<T: ?Sized> ArchiveCopy for PhantomData<T> {}
+impl ArchiveCopy for NonZeroI8 {}
+impl ArchiveCopy for i8 {}
+impl ArchiveCopy for u8 {}
+impl ArchiveCopy for bool {}
+impl ArchiveCopy for NonZeroU8 {}
 
 // Multibyte integers are not ArchiveCopy if the target does not match the archive endianness
-#[cfg(any(
+#[cfg(not(any(
     all(target_endian = "little", feature = "archive_be"),
     all(target_endian = "big", feature = "archive_le"),
-))]
+)))]
 const _: () = {
-    impl !ArchiveCopy for i16 {}
-    impl !ArchiveCopy for i32 {}
-    impl !ArchiveCopy for i64 {}
-    impl !ArchiveCopy for i128 {}
-    impl !ArchiveCopy for u16 {}
-    impl !ArchiveCopy for u32 {}
-    impl !ArchiveCopy for u64 {}
-    impl !ArchiveCopy for u128 {}
-    impl !ArchiveCopy for f32 {}
-    impl !ArchiveCopy for f64 {}
-    impl !ArchiveCopy for char {}
-    impl !ArchiveCopy for NonZeroI16 {}
-    impl !ArchiveCopy for NonZeroI32 {}
-    impl !ArchiveCopy for NonZeroI64 {}
-    impl !ArchiveCopy for NonZeroI128 {}
-    impl !ArchiveCopy for NonZeroU16 {}
-    impl !ArchiveCopy for NonZeroU32 {}
-    impl !ArchiveCopy for NonZeroU64 {}
-    impl !ArchiveCopy for NonZeroU128 {}
+    impl ArchiveCopy for i16 {}
+    impl ArchiveCopy for i32 {}
+    impl ArchiveCopy for i64 {}
+    impl ArchiveCopy for i128 {}
+    impl ArchiveCopy for u16 {}
+    impl ArchiveCopy for u32 {}
+    impl ArchiveCopy for u64 {}
+    impl ArchiveCopy for u128 {}
+    impl ArchiveCopy for f32 {}
+    impl ArchiveCopy for f64 {}
+    impl ArchiveCopy for char {}
+    impl ArchiveCopy for NonZeroI16 {}
+    impl ArchiveCopy for NonZeroI32 {}
+    impl ArchiveCopy for NonZeroI64 {}
+    impl ArchiveCopy for NonZeroI128 {}
+    impl ArchiveCopy for NonZeroU16 {}
+    impl ArchiveCopy for NonZeroU32 {}
+    impl ArchiveCopy for NonZeroU64 {}
+    impl ArchiveCopy for NonZeroU128 {}
 };
 
 // Pointer-sized integers are not ArchiveCopy if the target pointer width does not match the archive
